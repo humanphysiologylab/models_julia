@@ -43,9 +43,12 @@ function compute_rates_algebraic!(du, u, p, t, a)
     # calc_iseal!(du, u, p, t, a)
 
     du .= 0.
-    a .= 0.
 
-    calc_stimulus!(du, u, p, t, a)
+    map!(x -> 0., values(a))
+    # a .= 0.
+
+    # calc_stimulus!(du, u, p, t, a)  # if moved to callback
+    calc_stimulus_v2!(du, u, p, t, a)
 
     calc_nernst!(du, u, p, t, a)
 
