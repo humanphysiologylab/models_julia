@@ -52,7 +52,7 @@ prob = ODEProblem(rhs, u₀, tspan, p, callback=cb_set, jac=jac)
 
 solver = Rodas5()
 
-saveat = 1e-3
+saveat = 1e-4
 dt = 1e-6
 
 abstol = 1e-9
@@ -64,3 +64,11 @@ kw_solve = (;solver, saveat, dt, abstol, reltol)
 sol = solve(prob; kw_solve...)
 
 ##
+
+m = map(u -> calc_means(u, p), sol)
+m = hcat(m...)
+
+## 
+
+include("./solve_model.jl")
+output = solve_model!(Vector(u), Vector(p), 2, 1e-3)
